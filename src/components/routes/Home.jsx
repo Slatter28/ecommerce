@@ -8,7 +8,7 @@ import CardHome from '../home/CardHome'
 const Home = () => {
 
 
- 
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -17,7 +17,8 @@ const Home = () => {
 
   const products = useSelector(state => state.products)
 
-  // console.log(products);
+  console.log(products)
+
 
   return (
     <div className='home'>
@@ -25,7 +26,7 @@ const Home = () => {
         {
           products?.map(product => (
             <CardHome
-              key={ product.id}
+              key={product.id}
               product={product}
             />
           ))

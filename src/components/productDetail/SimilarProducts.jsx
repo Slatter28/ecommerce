@@ -16,7 +16,7 @@ const SimilarProducts = ({productInfo}) => {
     }
   }, [productInfo])
 
-  console.log(filterProducts)
+  // console.log(filterProducts)
 
   return (
     <div className='container-similar-products'>

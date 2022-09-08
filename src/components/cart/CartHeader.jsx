@@ -1,7 +1,7 @@
 import React from 'react'
 import './style/CartHeader.css'
 const CartHeader = ({product}) => {
-    console.log(product);
+
     return (
         <div className='Cart__header'>
             {/* <div className='Cart__header-img'>

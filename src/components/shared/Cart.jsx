@@ -1,16 +1,33 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { getAllCarts } from '../../store/slices/cart.slice'
 import getConfig from '../../utils/getConfig'
 import ProductCartInfo from '../cart/ProductCartInfo'
 
 const Cart = () => {
+  
 
     const [cartProducts, setCartProducts] = useState()
+    const [totalPrice, setTotalPrice] = useState()
+
+
+    const dispatch = useDispatch()
+
+    const navigate = useNavigate();
   
     const getAllProductsCart = () => {
       const URL = 'https://ecommerce-api-react.herokuapp.com/api/v1/cart'
       axios.get(URL, getConfig())
-        .then(res => setCartProducts(res.data.data.cart.products))
+        .then(res => {
+          const products = res.data.data.cart.products
+          setCartProducts(products)
+          const total = products.reduce((acc,cv)=>{
+            return Number(cv.price) * cv.productsInCart.quantity + acc
+          },0)
+          setTotalPrice(total);
+        })
         .catch(err => setCartProducts())
     }
   
@@ -31,14 +48,16 @@ const Cart = () => {
         .then(res => {
           console.log(res.data)
           getAllProductsCart()
+          setTotalPrice(0);
+          dispatch(getAllCarts())
         })
         .catch(err => console.log(err))
     }
   
     return (
-      <section className='cart'>
-        <h2 className='cart__title'>Cart</h2>
-        <div className='cart__container-item'>
+      <section className='carts'>
+        <h2 className='carts__title'>Cart</h2>
+        <div className='carts__container-item'>
           {
             cartProducts?.map(product => (
               <ProductCartInfo
@@ -49,11 +68,11 @@ const Cart = () => {
             ))
           }
         </div>
-        <hr className='cart__hr' />
-        <footer className='cart__footer'>
-          <span className='cart__total-global-label'>Total:</span>
-          <p className='cart__total-global-value'>1350</p>
-          <button onClick={handleCheckout} className='cart__btn'>Checkout</button>
+        <hr className='carts__hr' />
+        <footer className='carts__footer'>
+          <span className='carts__total-global-label'>Total:</span>
+          <p className='carts__total-global-value'>{totalPrice}</p>
+          <button onClick={handleCheckout} className='carts__btn'>Checkout</button>
         </footer>
       </section>
     )

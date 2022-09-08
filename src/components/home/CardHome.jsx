@@ -1,11 +1,14 @@
 import axios from 'axios';
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getAllCarts } from '../../store/slices/cart.slice';
 import getConfig from '../../utils/getConfig';
 
 const CardHome = ({ product }) => {
 
-    // console.log(product);
+
+    const dispatch = useDispatch()
 
     const navigate = useNavigate();
 
@@ -21,27 +24,15 @@ const CardHome = ({ product }) => {
             quantity : 1
         }
         axios.post(URL,obj,getConfig())
-        .then(res=>console.log(res))
+        .then(res=>{
+            dispatch(getAllCarts())
+            console.log(res);
+        })
         .catch(err=>console.log(err))
     }
 
     return (
 
-        // <div onClick={handleClick} className="card">
-
-        //     <div className="card__left">
-        //         <img src={product.productImgs[0]} alt="mouse corsair" className="card_img" />
-        //     </div>
-
-        //     <div className="card__content">
-        //         <h3 className='card__content-title'>{product.title}</h3>
-        //         <h2 className="card__content-price">{product.price}$</h2>
-        //         <a href="#" className="buy">Buy Now</a>
-        //     </div>
-
-
-
-        // </div>
         <div className="container" onClick={handleClick}>
             <div className="el-wrapper">
                 <div className="box-up">

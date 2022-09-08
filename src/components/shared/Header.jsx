@@ -1,22 +1,34 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Navigate, NavLink } from 'react-router-dom'
+import { getAllCarts } from '../../store/slices/cart.slice'
 import getConfig from '../../utils/getConfig'
 import CartHeader from '../cart/CartHeader'
 const Header = () => {
 
-    const [cartProducts, setCartProducts] = useState()
+    // const [cartProducts, setCartProducts] = useState()
 
-    const getAllProductsCart = () => {
-        const URL = 'https://ecommerce-api-react.herokuapp.com/api/v1/cart'
-        axios.get(URL, getConfig())
-            .then(res => setCartProducts(res.data.data.cart.products))
-            .catch(err => setCartProducts())
-    }
+    // const getAllProductsCart = () => {
+    //     const URL = 'https://ecommerce-api-react.herokuapp.com/api/v1/cart'
+    //     axios.get(URL, getConfig())
+    //         .then(res => setCartProducts(res.data.data.cart.products))
+    //         .catch(err => setCartProducts())
+    // }
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        getAllProductsCart()
+
+      dispatch(getAllCarts())
     }, [])
+  
+    const cart = useSelector(state => state.cart)
+    console.log(cart);
+
+    // useEffect(() => {
+    //     getAllProductsCart()
+    // }, [])
 
     return (
         <header className="header">
@@ -50,19 +62,22 @@ const Header = () => {
                                 </div>
                                 <div>
                                     {
-                                        cartProducts?.map(product => (
+                                        cart?.map(product => (
                                             <CartHeader
                                                 key={product.id}
                                                 product={product}
-                                                getAllProductsCart={getAllProductsCart}
+                                                // getAllProductsCart={getAllProductsCart}
                                             />
                                         ))
                                     }
                                 </div>
                                 <div className='dropdown-content-footer'>
+                                    <button className="button-24" >
                                     <NavLink to="/cart">
                                         <h2 className="header__link">Checkout</h2>
                                     </NavLink>
+                                    </button>
+                                   
                                 </div>
 
                             </div>
