@@ -1,0 +1,26 @@
+.Cart__header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+    border-bottom: 1px solid var(--color-primary);
+}
+
+.Cart__header-description{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.Cart__header-values{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.Cart__header-title{
+    font-size: 15px;
+    text-align: center;
+}

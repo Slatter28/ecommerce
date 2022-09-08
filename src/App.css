@@ -1,0 +1,12 @@
+:root {
+    --color-primary: #3f96cd;
+  }
+.active-link{
+    color: #3f96cd;
+    font-size: 30px;
+}
+.app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
